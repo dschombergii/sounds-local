@@ -1,0 +1,170 @@
+:root {
+	--white: #fff;
+	--active-color: #bdb461;
+	--width: 350px;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+html {
+	font-family: Arial, Helvetica, sans-serif;
+	height: 100%;
+	background: gray;
+	transition: background 0.4s ease;
+}
+
+button {
+	background: none;
+	border: none;
+	outline: none;
+	cursor: pointer;
+}
+
+.MuiDrawer-paper {
+	background: var(--active-color);
+	opacity: 95%;
+}
+
+.MuiAccordion-root {
+	outline: none;
+	box-shadow: none;
+	margin-top: 10px;
+}
+
+.credentials-form {
+	display: flex;
+	flex-direction: column;
+	width: 110%;
+}
+
+.login-button {
+	margin-top: 25px !important;
+	margin-bottom: 25px !important;
+	background-color: #e0e0e0;
+}
+
+.MuiTextField-root {
+	background: transparent;
+}
+
+.audio-player {
+	width: auto;
+	border-radius: 20px;
+	padding: 24px;
+	box-shadow: 0 28px 28px rgba(0, 0, 0, 0.5);
+	margin: auto;
+	background: var(--active-color);
+	opacity: 95%;
+	color: var(--white);
+}
+
+.artwork {
+	border-radius: 15px;
+	display: block;
+	margin: auto;
+	height: 200px;
+	width: 200px;
+	box-shadow: 0 10px 28px rgba(0, 0, 0, 0.2);
+}
+
+.track-info {
+	text-align: center;
+	z-index: 1;
+	position: relative;
+}
+
+.title {
+	font-weight: 700;
+	margin-bottom: 4px;
+}
+
+.artist {
+	font-weight: 300;
+	margin-top: 0;
+}
+
+.audio-controls {
+	display: flex;
+	justify-content: space-between;
+	width: 75%;
+	margin: 0 auto 15px;
+}
+
+.audio-controls .prev svg,
+.audio-controls .next svg {
+	width: 35px;
+	height: 35px;
+}
+
+.audio-controls .play svg,
+.audio-controls .pause svg {
+	height: 40px;
+	width: 40px;
+}
+
+.audio-controls path {
+	fill: var(--white);
+}
+
+input[type="range"] {
+	height: 5px;
+	-webkit-appearance: none;
+	width: 100%;
+	margin-bottom: 10px;
+	border-radius: 8px;
+	background: #3b7677;
+	transition: background 0.2s ease;
+	cursor: pointer;
+	outline: none;
+	z-index: 2;
+}
+
+.info-toggle {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding-top: 1rem;
+}
+
+.info-toggle > button {
+	color: white;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.genres {
+	width: 300px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+}
+
+.genres-list {
+	width: 300px;
+	display: flex;
+	align-items: center;
+}
+
+.artist-info {
+	width: 200px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+@keyframes colorChange {
+	from {
+		filter: hue-rotate(0deg);
+	}
+	to {
+		filter: hue-rotate(180deg);
+	}
+}
+
+/* .App {
+	text-align: center;
+} */
