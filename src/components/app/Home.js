@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { SongContext } from '../../context/SongContext'
 
 import Globe from './Globe'
+import LoginPopper from './LoginPopper'
 
 export const Home = () => {
     const { fetchTracks, setQuery, loading, tracks, query } = useContext(SongContext)
@@ -14,6 +15,7 @@ export const Home = () => {
                     <button onClick={fetchTracks}>Search</button>
                 </div>
                 : <div>Tuning in to your city...</div>} */}
+            <LoginPopper />
             <Globe />
         </div >
     )

@@ -4,15 +4,16 @@ import { SongContext } from '../../context/SongContext'
 
 import AudioControls from './AudioControls'
 import { Genres } from './Genres'
+import { ArtistInfo } from './ArtistInfo'
 
 const AudioPlayer = () => {
   // Context
-  const { tracks, isPlaying, setIsPlaying, trackIndex, setTrackIndex, setBackdropColor } = useContext(SongContext)
+  const { tracks, isPlaying, setIsPlaying, trackIndex, setTrackIndex, setBackdropColor, fetchArtist } = useContext(SongContext)
 
   // State
   const [trackProgress, setTrackProgress] = useState(0)
 
-  const { title, artist, artistURL, image, audioSrc, color } = tracks[trackIndex]
+  const { title, artist, artistURL, albumURL, image, audioSrc, color } = tracks[trackIndex]
 
   const [showGenres, toggleShowGenres] = useState(false)
   const [showArtistInfo, toggleShowArtistInfo] = useState(false)
@@ -26,6 +27,7 @@ const AudioPlayer = () => {
 
   useEffect(() => {
     if (isPlaying) {
+      fetchArtist(albumURL)
       audioRef.current.play()
       startTimer()
     } else {
@@ -43,6 +45,7 @@ const AudioPlayer = () => {
 
   useEffect(() => {
     if (audioRef.current.getAttribute('src') !== audioSrc) {
+      fetchArtist(albumURL)
       audioRef.current.pause()
 
       audioRef.current = new Audio(audioSrc)
@@ -118,7 +121,6 @@ const AudioPlayer = () => {
     <div className="audio-player" style={{ animation: `${isPlaying ? 'colorChange 30s alternate infinite' : 'null'}` }}>
       <div style={{ display: "flex", flexDirection: "row" }}>
         {showGenres && <Genres className="genres" />}
-        {/* {showGenres && <div className="genres">Genres</div>} */}
         <div style={{ width: "300px" }}>
           <div className="track-info">
             <img
@@ -156,7 +158,7 @@ const AudioPlayer = () => {
             </div>
           </div>
         </div>
-        {showArtistInfo && <div className="artist-info">Artist Info</div>}
+        {showArtistInfo && <ArtistInfo />}
       </div>
     </div>
   )

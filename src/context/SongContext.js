@@ -2,7 +2,8 @@ import React, { useState, createContext, useEffect } from 'react'
 import { prominent } from 'color.js'
 import cities from "./cities";
 const bcfetch = require('bandcamp-fetch')
-
+const util = require('util');
+const { Url } = require('url');
 
 export const SongContext = createContext()
 
@@ -10,7 +11,9 @@ export function SongProvider({ children }) {
     const [logOrSign, setLogOrSign] = useState(true)
     const [query, setQuery] = useState('')
     const [loading, setLoading] = useState(false)
+    const [artistLoading, setArtistLoading] = useState(true)
     const [tracks, setTracks] = useState([])
+    const [artistInfo, setArtistInfo] = useState({})
     const [tracksCopy, setTracksCopy] = useState([])
     const [genres, setGenres] = useState([])
     const [selectedGenres, setSelectedGenres] = useState(() => genres)
@@ -21,6 +24,7 @@ export function SongProvider({ children }) {
     const [isPlaying, setIsPlaying] = useState(false)
     const [trackIndex, setTrackIndex] = useState(0)
     const [backdropColor, setBackdropColor] = useState(null)
+    const [modalOpen, setModalOpen] = useState(false);
 
     const shuffleTracks = (array) => {
         for (let i = array.length - 1; i > 0; i--) {
@@ -62,6 +66,7 @@ export function SongProvider({ children }) {
             }
             await bcfetch.getReleasesByTag(tagUrl, params)
                 .then(results => {
+                    console.log(results.items)
                     for (let song of results.items) {
                         let rgb = []
                         prominent(song.imageUrl, { amount: 1 }).then(color => {
@@ -75,7 +80,8 @@ export function SongProvider({ children }) {
                             audioSrc: song.featuredTrack.streamUrl,
                             image: song.imageUrl,
                             albumName: song.name,
-                            color: rgb
+                            color: rgb,
+                            albumURL: song.url
                         })
                     }
                 }).then(() => {
@@ -92,6 +98,33 @@ export function SongProvider({ children }) {
         console.log(genres)
         setQuery('')
         console.log(tracks)
+    }
+
+    const fetchArtist = async (album) => {
+        setArtistInfo({})
+        setArtistLoading(true)
+        let data = {}
+        const albumUrl = album;
+
+        const options = {
+            albumImageFormat: 'art_app_large',
+            artistImageFormat: 'bio_featured',
+            includeRawData: false
+        }
+
+        await bcfetch.getAlbumInfo(albumUrl, options).then(results => {
+            console.log(results)
+            data = {
+                artistName: results.artist.name,
+                artistDescription: results.artist.description,
+                artistLink: results.artist.url,
+                artistImage: results.artist.imageUrl
+            }
+        }).then(() => {
+            console.log(data)
+            setArtistInfo(data)
+            setArtistLoading(false)
+        })
     }
 
     const value = {
@@ -119,8 +152,11 @@ export function SongProvider({ children }) {
         genres,
         selectedGenres,
         setSelectedGenres,
-        logOrSign,
-        setLogOrSign
+        modalOpen,
+        setModalOpen,
+        fetchArtist,
+        artistInfo,
+        artistLoading
     }
 
     return (

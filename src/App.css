@@ -22,11 +22,6 @@ button {
 	cursor: pointer;
 }
 
-.MuiDrawer-paper {
-	background: var(--active-color);
-	opacity: 95%;
-}
-
 .MuiAccordion-root {
 	outline: none;
 	box-shadow: none;
@@ -36,17 +31,19 @@ button {
 .credentials-form {
 	display: flex;
 	flex-direction: column;
-	width: 110%;
+	width: 100%;
 }
 
 .login-button {
-	margin-top: 25px !important;
-	margin-bottom: 25px !important;
+	margin-top: 15px !important;
+	margin-bottom: 10px !important;
 	background-color: #e0e0e0;
 }
 
-.MuiTextField-root {
-	background: transparent;
+.account-button {
+	margin-top: 5px !important;
+	margin-bottom: 15px !important;
+	background-color: #e0e0e0;
 }
 
 .audio-player {
@@ -67,6 +64,7 @@ button {
 	height: 200px;
 	width: 200px;
 	box-shadow: 0 10px 28px rgba(0, 0, 0, 0.2);
+	opacity: 100%;
 }
 
 .track-info {
@@ -149,11 +147,36 @@ input[type="range"] {
 }
 
 .artist-info {
-	width: 200px;
+	width: 400px;
 	display: flex;
-	flex-direction: row;
-	justify-content: center;
+	flex-direction: column;
+	justify-content: space-evenly;
 	align-items: center;
+}
+
+.artist-image {
+	border-radius: 10px;
+	background: white;
+	display: block;
+	margin: auto;
+	margin-bottom: 20px;
+	height: auto;
+	/* x */
+	max-width: 300px;
+	box-shadow: 0 10px 28px rgba(0, 0, 0, 0.2);
+	opacity: 100%;
+}
+
+a,
+a:visited,
+a:active {
+	color: inherit;
+	text-decoration: none;
+}
+
+.artist-link:hover {
+	transform: scale(1.1);
+	transition: all 0.2s ease-in-out;
 }
 
 @keyframes colorChange {
