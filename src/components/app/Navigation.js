@@ -47,10 +47,13 @@ export const Navigation = () => {
         <ThemeProvider theme={theme}>
             <AppBar position="sticky">
                 <Toolbar>
-                    <Typography variant="h6" style={{ flexGrow: "1", color: "white" }}>
-                        <Link className="Link"
-                            style={{ textDecoration: 'none', color: 'var(--active-color)', animation: `${isPlaying ? 'colorChange 30s alternate infinite' : 'null'}` }}>
-                            Sounds Local</Link>
+                    <Typography variant="h6" style={{ flexGrow: '1', color: "white" }}>
+                        <Tooltip placement="bottom" arrow
+                            title={`Spin and zoom in/out on the globe. Select a city point to start shuffling music from that city!`}  >
+                            <Link className="Link"
+                                style={{ textDecoration: 'none', color: 'var(--active-color)', animation: `${isPlaying ? 'colorChange 30s alternate infinite' : 'null'}` }}>
+                                Sounds Local</Link>
+                        </Tooltip>
                     </Typography>
                     <Tooltip placement="left" arrow
                         title={`Can't find your city on the globe? Search it here! (hint: you can also search States, Countries, and Genres)`}  >
@@ -89,6 +92,6 @@ export const Navigation = () => {
                     </div>
                 </Toolbar>
             </AppBar>
-        </ThemeProvider>
+        </ThemeProvider >
     )
 }

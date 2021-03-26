@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import ReactGlobe from 'react-globe'
+
 import 'tippy.js/dist/tippy.css'
 import 'tippy.js/animations/scale.css'
 
@@ -26,7 +27,8 @@ export const Globe = () => {
         setEvent,
         details,
         setDetails,
-        setAnchorEl } = useContext(SongContext)
+        setAnchorEl,
+        isPlaying } = useContext(SongContext)
 
     function onClickMarker(marker, markerObject, event) {
         setDetails(markerTooltipRenderer(marker))
@@ -53,9 +55,10 @@ export const Globe = () => {
             {details && (
                 <MusicPopper />
             )}
+
             <ReactGlobe
                 position="absolute"
-                height="93vh"
+                height="85vh"
                 markers={markers}
                 options={options}
                 globeTexture={bwEarth}
