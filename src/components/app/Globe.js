@@ -27,8 +27,7 @@ export const Globe = () => {
         setEvent,
         details,
         setDetails,
-        setAnchorEl,
-        isPlaying } = useContext(SongContext)
+        setAnchorEl } = useContext(SongContext)
 
     function onClickMarker(marker, markerObject, event) {
         setDetails(markerTooltipRenderer(marker))
@@ -58,7 +57,7 @@ export const Globe = () => {
 
             <ReactGlobe
                 position="absolute"
-                height="85vh"
+                height="93vh"
                 markers={markers}
                 options={options}
                 globeTexture={bwEarth}
