@@ -2,14 +2,12 @@ import React, { useState, createContext, useEffect } from 'react'
 import { prominent } from 'color.js'
 import cities from "./cities";
 const bcfetch = require('bandcamp-fetch')
-const util = require('util');
-const { Url } = require('url');
 
 export const SongContext = createContext()
 
 export function SongProvider({ children }) {
-    const [logOrSign, setLogOrSign] = useState(true)
     const [query, setQuery] = useState('')
+    const [city, setCity] = useState('')
     const [loading, setLoading] = useState(false)
     const [artistLoading, setArtistLoading] = useState(true)
     const [tracks, setTracks] = useState([])
@@ -20,10 +18,9 @@ export function SongProvider({ children }) {
     const [markers, setMarkers] = useState(cities);
     const [event, setEvent] = useState(null);
     const [details, setDetails] = useState(null);
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorEl, setAnchorEl] = useState(null);
     const [isPlaying, setIsPlaying] = useState(false)
     const [trackIndex, setTrackIndex] = useState(0)
-    const [backdropColor, setBackdropColor] = useState(null)
     const [modalOpen, setModalOpen] = useState(false);
 
     const shuffleTracks = (array) => {
@@ -35,9 +32,7 @@ export function SongProvider({ children }) {
 
     const genresArray = (data) => {
         let genres = data.map(track => track.genre)
-        console.log("genres: ", genres)
         let uniqueGenres = [...new Set(genres.filter(genre => genre != ""))]
-        console.log("uniqueGenres: ", uniqueGenres)
         return uniqueGenres
     }
 
@@ -50,7 +45,6 @@ export function SongProvider({ children }) {
                     }
                 }
             })
-        console.log(filteredTracks)
         setTracks(filteredTracks)
     }, [selectedGenres])
 
@@ -135,6 +129,8 @@ export function SongProvider({ children }) {
         setTracks,
         tracks,
         query,
+        city,
+        setCity,
         markers,
         setMarkers,
         event,
@@ -147,8 +143,6 @@ export function SongProvider({ children }) {
         setIsPlaying,
         trackIndex,
         setTrackIndex,
-        backdropColor,
-        setBackdropColor,
         genres,
         selectedGenres,
         setSelectedGenres,

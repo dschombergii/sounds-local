@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import FirebaseContext from '../../firebase/context'
 
-function ForgotPassword() {
+export const ForgotPassword = () => {
   const { firebase } = React.useContext(FirebaseContext)
-  const [resetPasswordEmail, setResetPasswordEmail] = React.useState('')
-  const [isPasswordReset, setIsPasswordReset] = React.useState(false)
-  const [passwordResetError, setPasswordResetError] = React.useState(null)
+  const [resetPasswordEmail, setResetPasswordEmail] = useState('')
+  const [isPasswordReset, setIsPasswordReset] = useState(false)
+  const [passwordResetError, setPasswordResetError] = useState(null)
 
   async function handleResetPassword() {
     try {
@@ -36,5 +36,3 @@ function ForgotPassword() {
     </div>
   )
 }
-
-export default ForgotPassword;

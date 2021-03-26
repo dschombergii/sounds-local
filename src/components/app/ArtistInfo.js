@@ -1,12 +1,13 @@
 import React, { useContext, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import { Typography } from '@material-ui/core'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
 import { SongContext } from '../../context/SongContext'
 
 export const ArtistInfo = () => {
-    const { artistInfo, artistLoading } = useContext(SongContext)
+    const {
+        artistInfo,
+        artistLoading } = useContext(SongContext)
 
     useEffect(() => {
     }, [artistInfo])

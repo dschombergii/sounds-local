@@ -1,14 +1,12 @@
-import React, { useState } from 'react'
-import { Link, useHistory } from 'react-router-dom'
-import useFormValidation from './useFormValidation'
-import validateLogin from './validateLogin'
+import React, { useState, useContext } from 'react'
+import { Link } from 'react-router-dom'
+import { useFormValidation } from './useFormValidation'
+import { validateLogin } from './validateLogin'
 import firebase from '../../firebase'
 
-import {
-    TextField,
-    Button,
-    Container
-} from '@material-ui/core'
+import { TextField, Button, Container } from '@material-ui/core'
+
+import { SongContext } from '../../context/SongContext'
 
 const INITIAL_STATE = {
     name: '',
@@ -16,13 +14,14 @@ const INITIAL_STATE = {
     password: ''
 }
 
-export default function Login(props) {
+export const Login = (props) => {
     const { handleChange,
         handleSubmit,
         handleBlur,
         values,
         errors,
         isSubmitting } = useFormValidation(INITIAL_STATE, validateLogin, authenticateUser)
+    const { setModalOpen } = useContext(SongContext)
     const [login, setLogin] = useState(true)
     const [firebaseError, setFirebaseError] = useState(null)
 
@@ -37,6 +36,7 @@ export default function Login(props) {
             console.error('Authentication error', err)
             setFirebaseError(err.message)
         }
+        setModalOpen(false)
     }
 
     return (

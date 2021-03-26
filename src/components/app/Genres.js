@@ -1,20 +1,22 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext } from 'react'
 import { SongContext } from '../../context/SongContext'
-import ToggleButton from '@material-ui/lab/ToggleButton';
-import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
+
+import ToggleButton from '@material-ui/lab/ToggleButton'
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup'
 
 export const Genres = () => {
-    const { selectedGenres, setSelectedGenres, genres } = useContext(SongContext)
+    const {
+        selectedGenres,
+        setSelectedGenres,
+        genres } = useContext(SongContext)
 
     const handleClick = (e) => {
-        console.log(e.currentTarget.value)
         e.currentTarget.disabled = true
-    };
+    }
 
     const handleGenres = (event, newGenres) => {
-        setSelectedGenres(newGenres);
-        console.log(newGenres)
-    };
+        setSelectedGenres(newGenres)
+    }
 
     return (
         <div className="genres-list">

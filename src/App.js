@@ -6,9 +6,9 @@ import './App.css'
 import { SongProvider } from './context/SongContext'
 import firebase, { FirebaseContext } from './firebase'
 
-import Router from './Router'
-import Navigation from './components/app/Navigation'
-import useAuth from './components/Auth/useAuth'
+import { Router } from './Router'
+import { Navigation } from './components/app/Navigation'
+import { useAuth } from './components/auth/useAuth'
 
 function App() {
   const user = useAuth()

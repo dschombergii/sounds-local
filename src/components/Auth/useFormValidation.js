@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 
-function useFormValidation(initialState, validate, authenticate) {
-    const [values, setValues] = React.useState(initialState)
-    const [errors, setErrors] = React.useState({})
-    const [isSubmitting, setSubmitting] = React.useState(false)
+export const useFormValidation = (initialState, validate, authenticate) => {
+    const [values, setValues] = useState(initialState)
+    const [errors, setErrors] = useState({})
+    const [isSubmitting, setSubmitting] = useState(false)
 
     React.useEffect(() => {
         if (isSubmitting) {
@@ -39,5 +39,3 @@ function useFormValidation(initialState, validate, authenticate) {
 
     return { handleChange, handleSubmit, handleBlur, values, errors, isSubmitting }
 }
-
-export default useFormValidation;

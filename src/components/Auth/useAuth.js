@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import firebase from '../../firebase'
 
-function useAuth() {
-    const [authUser, setAuthUser] = React.useState(null)
+export const useAuth = () => {
+    const [authUser, setAuthUser] = useState(null)
 
     React.useEffect(() => {
         const unsubscribe = firebase.auth.onAuthStateChanged(user => {
@@ -19,4 +19,3 @@ function useAuth() {
     return authUser
 }
 
-export default useAuth;

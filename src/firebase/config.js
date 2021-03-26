@@ -1,4 +1,4 @@
-var firebaseConfig = {
+let firebaseConfig = {
     apiKey: "AIzaSyBBrT6N_uBtFF-vDWCs1u4vlT-qA67Dpy4",
     authDomain: "hooks-news-1aad4.firebaseapp.com",
     databaseURL: "https://hooks-news-1aad4.firebaseio.com",

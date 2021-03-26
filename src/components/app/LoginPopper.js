@@ -1,16 +1,18 @@
-import React, { useContext, useEffect } from 'react';
-import { SongContext } from '../../context/SongContext'
-import { makeStyles } from '@material-ui/core/styles';
-import Popper from '@material-ui/core/Popper';
-import { AppBar, Typography, Button } from '@material-ui/core'
-import CloseIcon from '@material-ui/icons/Close';
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom'
 import Draggable from 'react-draggable'
-import { ThemeProvider } from '@material-ui/styles';
+
+import { SongContext } from '../../context/SongContext'
+import FirebaseContext from '../../firebase/context'
 import { theme } from './theme'
 
-import FirebaseContext from '../../firebase/context'
+import { makeStyles } from '@material-ui/core/styles'
+import { AppBar, Typography, Popper } from '@material-ui/core'
+import CloseIcon from '@material-ui/icons/Close'
+import { ThemeProvider } from '@material-ui/styles'
 
-import Login from '../Auth/Login'
+import { Login } from '../auth/Login'
+import { PlaylistAccordion } from './PlaylistAccordion'
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -31,12 +33,16 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function LoginPopper() {
-    const classes = useStyles();
-    const { modalOpen, setModalOpen } = useContext(SongContext)
-    const { firebase, user } = React.useContext(FirebaseContext)
+export const LoginPopper = () => {
+    const {
+        modalOpen,
+        setModalOpen,
+        isPlaying } = useContext(SongContext)
+
+    const { firebase, user } = useContext(FirebaseContext)
 
     const id = 'simple-popper'
+    const classes = useStyles();
 
     const handleClose = () => {
         setModalOpen(false)
@@ -57,10 +63,15 @@ export default function LoginPopper() {
                 </ThemeProvider>
                 <div className={classes.paper}>
                     {user
-                        ? <div className='audio-player' style={{ textAlign: "center", width: "350px" }}>
-                            <Button type="button" variant="contained" className="account-button" onClick={() => firebase.logout()}>
-                                Logout
-                            </Button>
+                        ? <div className='audio-player' style={{ textAlign: "right", width: "350px", animation: `${isPlaying ? 'colorChange 30s alternate infinite' : 'null'}` }}>
+                            <Typography>
+                                <Link className="Link"
+                                    onClick={() => firebase.logout()}
+                                    style={{ textDecoration: 'none', color: 'white' }}>
+                                    Logout
+                            </Link>
+                            </Typography>
+                            <PlaylistAccordion />
                         </div>
                         : <div className='audio-player' style={{ textAlign: "center", width: "350px" }}>
                             <Login />
@@ -69,5 +80,5 @@ export default function LoginPopper() {
                 </div>
             </Popper>
         </Draggable>
-    );
+    )
 }

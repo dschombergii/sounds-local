@@ -1,10 +1,10 @@
 import React from 'react';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import PauseIcon from '@material-ui/icons/Pause';
-import SkipNextIcon from '@material-ui/icons/SkipNext';
-import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow'
+import PauseIcon from '@material-ui/icons/Pause'
+import SkipNextIcon from '@material-ui/icons/SkipNext'
+import SkipPreviousIcon from '@material-ui/icons/SkipPrevious'
 
-const AudioControls = ({ isPlaying, onPlayPauseClick, onPrevClick, onNextClick, }) => (
+export const AudioControls = ({ isPlaying, onPlayPauseClick, onPrevClick, onNextClick, }) => (
   <div className="audio-controls">
     <button
       type="button"
@@ -42,6 +42,4 @@ const AudioControls = ({ isPlaying, onPlayPauseClick, onPrevClick, onNextClick, 
       <SkipNextIcon />
     </button>
   </div>
-);
-
-export default AudioControls;
+)

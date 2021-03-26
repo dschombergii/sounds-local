@@ -1,24 +1,31 @@
 import React, { useState, useEffect, useRef, useContext } from 'react'
-import Link from '@material-ui/core/Link'
+
 import { SongContext } from '../../context/SongContext'
 
-import AudioControls from './AudioControls'
+import { AudioControls } from './AudioControls'
 import { Genres } from './Genres'
 import { ArtistInfo } from './ArtistInfo'
 
-const AudioPlayer = () => {
-  // Context
-  const { tracks, isPlaying, setIsPlaying, trackIndex, setTrackIndex, setBackdropColor, fetchArtist } = useContext(SongContext)
+export const AudioPlayer = () => {
+  const {
+    tracks,
+    isPlaying,
+    setIsPlaying,
+    trackIndex,
+    setTrackIndex,
+    fetchArtist,
+    city } = useContext(SongContext)
 
-  // State
+  const { title,
+    artist,
+    albumURL,
+    image,
+    audioSrc } = tracks[trackIndex]
+
   const [trackProgress, setTrackProgress] = useState(0)
-
-  const { title, artist, artistURL, albumURL, image, audioSrc, color } = tracks[trackIndex]
-
   const [showGenres, toggleShowGenres] = useState(false)
   const [showArtistInfo, toggleShowArtistInfo] = useState(false)
 
-  // Refs
   const audioRef = useRef(new Audio(audioSrc))
   const intervalRef = useRef()
   const isReady = useRef(false)
@@ -36,7 +43,6 @@ const AudioPlayer = () => {
   }, [isPlaying])
 
   useEffect(() => {
-    // Pause and clean up on unmount
     return () => {
       audioRef.current.pause()
       clearInterval(intervalRef.current)
@@ -47,12 +53,9 @@ const AudioPlayer = () => {
     if (audioRef.current.getAttribute('src') !== audioSrc) {
       fetchArtist(albumURL)
       audioRef.current.pause()
-
       audioRef.current = new Audio(audioSrc)
       setTrackProgress(audioRef.current.currentTime)
-
     }
-
     isReady.current = true
 
     if (isReady.current) {
@@ -60,14 +63,12 @@ const AudioPlayer = () => {
       setIsPlaying(true)
       startTimer()
     } else {
-      // Set the isReady ref as true for the next pass
       isReady.current = true
     }
 
   }, [tracks, trackIndex])
 
   const startTimer = () => {
-    // Clear any timers already running
     clearInterval(intervalRef.current)
 
     intervalRef.current = setInterval(() => {
@@ -82,32 +83,26 @@ const AudioPlayer = () => {
   const toPrevTrack = () => {
     if (trackIndex - 1 < 0) {
       setTrackIndex(tracks.length - 1)
-      setBackdropColor(color)
     } else {
       setTrackIndex(trackIndex - 1)
-      setBackdropColor(color)
     }
   }
 
   const toNextTrack = () => {
     if (trackIndex < tracks.length - 1) {
       setTrackIndex(trackIndex + 1)
-      setBackdropColor(color)
     } else {
       setTrackIndex(0)
-      setBackdropColor(color)
     }
   }
 
   const onScrub = (value) => {
-    // Clear any timers already running
     clearInterval(intervalRef.current)
     audioRef.current.currentTime = value
     setTrackProgress(audioRef.current.currentTime)
   }
 
   const onScrubEnd = () => {
-    // If not already playing, start
     if (!isPlaying) {
       setIsPlaying(true)
     }
@@ -123,6 +118,7 @@ const AudioPlayer = () => {
         {showGenres && <Genres className="genres" />}
         <div style={{ width: "300px" }}>
           <div className="track-info">
+            <h4>Tuned in to {city}</h4>
             <img
               className="artwork"
               src={image}
@@ -163,5 +159,3 @@ const AudioPlayer = () => {
     </div>
   )
 }
-
-export default AudioPlayer
