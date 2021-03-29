@@ -1,5 +1,6 @@
 import React, { useState, createContext, useEffect } from 'react'
 import { prominent } from 'color.js'
+import axios from 'axios'
 import cities from "./cities";
 const bcfetch = require('bandcamp-fetch')
 
@@ -48,74 +49,35 @@ export function SongProvider({ children }) {
         setTracks(filteredTracks)
     }, [selectedGenres])
 
-    const fetchTracks = async (query) => {
+    const fetchTracks = async (city) => {
         setTracks([])
-        const tagUrl = `https://bandcamp.com/tag/${query}`
         setLoading(true)
         let data = []
         let genreList = []
-        for (let i = 1; i < 16; i++) {
-            const params = {
-                page: i
-            }
-            await bcfetch.getReleasesByTag(tagUrl, params)
-                .then(results => {
-                    console.log(results.items)
-                    for (let song of results.items) {
-                        let rgb = []
-                        prominent(song.imageUrl, { amount: 1 }).then(color => {
-                            rgb = color
-                        })
-                        data.push({
-                            genre: song.genre,
-                            artist: song.artist.name,
-                            artistURL: song.artist.url,
-                            title: song.featuredTrack.name,
-                            audioSrc: song.featuredTrack.streamUrl,
-                            image: song.imageUrl,
-                            albumName: song.name,
-                            color: rgb,
-                            albumURL: song.url
-                        })
-                    }
-                }).then(() => {
-                    params.page = i
-                })
-        }
-        setLoading(false)
-        shuffleTracks(data)
-        setTracks(data)
-        setTracksCopy(data)
-        genreList = genresArray(data)
-        setGenres(genreList)
-        setSelectedGenres(genreList)
-        console.log(genres)
-        setQuery('')
-        console.log(tracks)
+        await axios.get(`https://sounds-local-server.herokuapp.com/tracks/${city}`).then(res => {
+            data = res.data.data
+            console.log(data)
+            genreList = res.data.genreList
+            console.log(genreList)
+        }).then(() => {
+            setTracks(data)
+            setTracksCopy(data)
+            setGenres(genreList)
+            setSelectedGenres(genreList)
+            setLoading(false)
+            setQuery('')
+        })
     }
 
     const fetchArtist = async (album) => {
         setArtistInfo({})
         setArtistLoading(true)
         let data = {}
-        const albumUrl = album;
-
-        const options = {
-            albumImageFormat: 'art_app_large',
-            artistImageFormat: 'bio_featured',
-            includeRawData: false
-        }
-
-        await bcfetch.getAlbumInfo(albumUrl, options).then(results => {
-            console.log(results)
-            data = {
-                artistName: results.artist.name,
-                artistDescription: results.artist.description,
-                artistLink: results.artist.url,
-                artistImage: results.artist.imageUrl
-            }
-        }).then(() => {
+        let body = { albumUrl: album }
+        await axios.post(`https://sounds-local-server.herokuapp.com/artistInfo`, body).then(res => {
+            data = res.data.data
             console.log(data)
+        }).then(() => {
             setArtistInfo(data)
             setArtistLoading(false)
         })
